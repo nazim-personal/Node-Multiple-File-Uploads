@@ -1,0 +1,40 @@
+if file uploads in 
+
+ PROJECT
+    -
+    - 
+    --> backend
+           -
+           -
+           ---> public
+                  -
+                  -
+                  --->uploads
+                         -
+                         -
+                         ---> hello.png
+
+if access this hello.png then use below line in server.js
+
+
+import path from 'path';
+          or
+const path = require('path');
+
+app.use('/public/uploads/', express.static(path.join(__dirname, 'public/uploads')));
+
+and  file uploads to
+
+const storage = multer.diskStorage({
+  destination: "./public/uploads/",     //***
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  
+  },
+  onFileUploadStart: function (file, req, res) {
+    if (req.files.file.length > maxAllowedFileSize) {
+      console.log('Image large');
+      return false;
+    }
+  },
+});
